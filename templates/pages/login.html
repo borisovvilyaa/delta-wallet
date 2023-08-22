@@ -1,0 +1,33 @@
+{{define "content"}}
+<main>
+    <div class="container">
+        <div class="main-container">
+            <div class="container mt-5">
+                <h1 class="mb-4">Your Bitcoin Wallet Mnemonic</h1>
+                <div class="row">
+                    <form action="/sign-in" method="post" class="mb-3">
+                        <label class="form-label">Enter Your Mnemonic Phrase</label>
+                        <div class="d-flex flex-wrap">
+
+                            {{range $i, $word := until 12}}
+                            <div class="col-md-4">
+                                <input class="form-control mt-2" type="text" id="word{{$i}}" name="word{{$i}}" placeholder="Word {{$i}}">
+                            </div>
+                            {{end}}
+                        </div>
+                        <button class="btn btn-gradient mt-2 w-100" type="submit">Generate Wallet</button>
+                    </form>
+                    <div class="alert alert-info mt-3" role="alert">
+                        <p class="mb-0">Make sure to keep your mnemonic phrase safe and private. Do not share it with anyone!</p>
+                    </div>
+                    <div id="walletInfo" class="d-none">
+                        <h4 class="mb-3">Your Generated Wallet Info:</h4>
+                        <p><strong>Mnemonic Phrase:</strong></p>
+                        <p id="mnemonicPhrase"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{{end}}
