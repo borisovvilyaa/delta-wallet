@@ -95,6 +95,23 @@
     </div>
   </div>
 </main>
+<script>
+  // Get the address value from the cookie named 'address'
+  const addressCookie = document.cookie
+    .split(';')
+    .find(cookie => cookie.trim().startsWith('address='));
+
+  if (addressCookie) {
+    const addressValue = addressCookie.split('=')[1];
+    
+    // Display the address value
+    const addressElement = document.querySelector('.address');
+    addressElement.textContent = addressValue;
+
+    // Optional: Log the address value to the console
+    console.log('Address value from cookie:', addressValue);
+  }
+</script>
 {{end}}
 
 

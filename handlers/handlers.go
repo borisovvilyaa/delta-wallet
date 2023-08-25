@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"delta_wallet/services"
-	"fmt"
 	"html/template"
 	"net/http"
 )
@@ -19,24 +18,21 @@ func renderTemplate(w http.ResponseWriter, tmplName string, title string, r *htt
 		"templates/layouts/header.html",
 		"templates/pages/"+tmplName,
 	))
-	sessionValue, err := services.GetCryptoSessionValue(r, "address")
-	if err != nil {
-		fmt.Println("Error getting session value:", err)
-	}
+	// sessionValue, err := services.GetCryptoSessionValue(r, "address")
+	// if err != nil {
+	// 	fmt.Println("Error getting session value:", err)
+	// }
 
-	// Perform a type assertion to convert sessionValue to string
-	address_session, ok := sessionValue.(string)
-	if !ok {
-		fmt.Println("Error: sessionValue is not a string")
-		return
-	}
-
+	// // Perform a type assertion to convert sessionValue to string
+	// address_session, ok := sessionValue.(string)
+	// if !ok {
+	// 	fmt.Println("Error: sessionValue is not a string")
+	// 	return
+	// }
 	data := struct {
-		Title           string
-		Address_session string
+		Title string
 	}{
-		Title:           title,
-		Address_session: address_session, // Use the type-asserted string value
+		Title: title,
 	}
 	tmpl.ExecuteTemplate(w, "base.html", data)
 
