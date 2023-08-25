@@ -1,31 +1,23 @@
-package main
+// package main
 
-import (
-	"delta_wallet/handlers"
-	"delta_wallet/services"
-	"fmt"
-	"net/http"
+// import (
+// 	"delta_wallet/handlers"
 
-	"github.com/gorilla/mux"
-)
+// 	"github.com/gin-gonic/gin"
+// )
 
-func main() {
-	router := mux.NewRouter()
+// func main() {
+// 	router := gin.Default()
 
-	// Маршруты и обработчики
-	router.HandleFunc("/", handlers.HomeHandler)
-	router.HandleFunc("/home", handlers.HomeHandler)
-	router.HandleFunc("/receive", handlers.ReceiveHandler)
-	router.HandleFunc("/send", handlers.SendHandler)
-	router.HandleFunc("/login", handlers.LoginHandler)
-	handlers.SetupRoutes()                                // Add this line
-	router.HandleFunc("/sign-in", services.SignInHandler) // Use "/sign-in" as the route
+// 	router.LoadHTMLGlob("templates/**/*")
+// 	router.Static("/static", "./static")
 
-	// Добавляем маршрут для статических файлов
-	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+// 	router.GET("/", handlers.Index)
+// 	router.GET("/home", handlers.Home)
+// 	router.GET("/receive", handlers.Receive)
+// 	router.GET("/send", handlers.Send)
+// 	router.GET("/login", handlers.Login)
+// 	router.GET("/create-wallet", handlers.CreateWallet)
 
-	http.Handle("/", router)
-
-	fmt.Println("http://localhost:8080/login")
-	http.ListenAndServe(":8080", nil)
-}
+// 	router.Run(":8080")
+// }

@@ -3,28 +3,29 @@ package services
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
-func SignInHandler(w http.ResponseWriter, r *http.Request) {
+func SignInHandler(c *gin.Context) {
 	fmt.Println("hello")
 
 	// Process the form data
-	if r.Method == http.MethodPost {
-		err := r.ParseForm()
+	if c.Request.Method == http.MethodPost {
+		err := c.Request.ParseForm()
 		if err != nil {
-			http.Error(w, "Error parsing form data", http.StatusBadRequest)
+			c.String(http.StatusBadRequest, "Error parsing form data")
 			return
 		}
 
 		// Loop through the form values and print them
 		for i := 0; i <= 11; i++ {
 			inputName := fmt.Sprintf("word%d", i)
-			inputValue := r.FormValue(inputName)
+			inputValue := c.PostForm(inputName)
 			fmt.Printf("Input %d: %s\n", i, inputValue)
 		}
 
 		// Redirect to /home
-		http.Redirect(w, r, "/home", http.StatusSeeOther)
-
+		c.Redirect(http.StatusSeeOther, "/home")
 	}
 }
