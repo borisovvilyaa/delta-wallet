@@ -5,13 +5,14 @@
             <div class="container mt-5">
                 <h1 class="mb-4">Your Bitcoin Wallet Mnemonic</h1>
                 <div class="row">
-                    <form action="/sign-in" method="post" class="mb-3">
+                    <form action="/sign-in" method="post" class="mb-3" onsubmit="return validateForm();">
                         <label class="form-label">Enter Your Mnemonic Phrase</label>
                         <div class="d-flex flex-wrap">
 
                             {{range $i, $word := until 12}}
                             <div class="col-md-4">
-                                <input class="form-control mt-2" type="text" id="word{{$i}}" name="word{{$i}}" placeholder="Word {{$i}}">
+                                <input class="form-control mt-2" type="text" id="word{{$i}}" name="word{{$i}}" placeholder="Word {{$i}}" maxlength="11" oninput="validateInput(this);">
+                                <div id="error{{$i}}" class="invalid-feedback">Invalid word</div>
                             </div>
                             {{end}}
                         </div>
@@ -30,4 +31,52 @@
         </div>
     </div>
 </main>
+<script>
+    function validateInput(input) {
+        const errorDiv = document.getElementById(`error${input.id.slice(-1)}`);
+        if (!/^[a-zA-Z]{1,11}$/.test(input.value)) {
+            input.classList.add('is-invalid');
+            errorDiv.style.display = 'block';
+        } else {
+            input.classList.remove('is-invalid');
+            errorDiv.style.display = 'none';
+        }
+    }
+
+    function validateForm() {
+        let valid = true;
+        for (let i = 0; i < 12; i++) {
+            const input = document.getElementById(`word${i}`);
+            const errorDiv = document.getElementById(`error${i}`);
+            if (!/^[a-zA-Z]{1,11}$/.test(input.value)) {
+                valid = false;
+                input.classList.add('is-invalid');
+                errorDiv.style.display = 'block';
+            } else {
+                input.classList.remove('is-invalid');
+                errorDiv.style.display = 'none';
+            }
+        }
+
+        return valid;
+    }
+
+    // Attach input event listeners
+    for (let i = 0; i < 12; i++) {
+        const input = document.getElementById(`word${i}`);
+        input.addEventListener('input', () => {
+            validateInput(input);
+        });
+    }
+</script>
+<style>
+    .is-invalid {
+        border-color: #dc3545 !important;
+    }
+
+    .invalid-feedback {
+        color: #dc3545;
+        display: none;
+    }
+</style>
 {{end}}
